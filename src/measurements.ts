@@ -1,7 +1,7 @@
-import metrics from './stairway-metrics.json' with { type: 'json' };
+import metrics from "./stairway-metrics.json" with { type: "json" };
 
 /** How a stairway's step count was arrived at, in descending order of authority. */
-export type StepSource = 'index' | 'osm-survey' | 'rise-estimate';
+export type StepSource = "index" | "osm-survey" | "rise-estimate";
 
 export type Measurement = {
   /** Height climbed from the bottom of the staircase to the top, in feet. */
@@ -38,7 +38,7 @@ export const measurementSource = {
   geometry: data.geometrySource,
   generatedAt: data.generatedAt,
   /** Typical error of a rise-derived step count, as a percentage. */
-  estimateErrorPercent: Math.round((data.calibration.medianRelativeError ?? 0) * 100)
+  estimateErrorPercent: Math.round((data.calibration.medianRelativeError ?? 0) * 100),
 };
 
 export function measurementFor(id: string): Measurement | undefined {
@@ -49,13 +49,13 @@ export function measurementFor(id: string): Measurement | undefined {
 export function stepReading(id: string, indexSteps: string) {
   const measurement = measurementFor(id);
   const counted = indexSteps.trim();
-  if (/^\d+$/.test(counted)) return { steps: Number(counted), source: 'index' as StepSource };
+  if (/^\d+$/.test(counted)) return { steps: Number(counted), source: "index" as StepSource };
   if (!measurement) return undefined;
   return { steps: measurement.steps, source: measurement.stepSource };
 }
 
 export const stepLabel = (steps: number, source: StepSource) =>
-  source === 'rise-estimate' ? `~${steps} steps` : `${steps} steps`;
+  source === "rise-estimate" ? `~${steps} steps` : `${steps} steps`;
 
 /** Short form for a result card: a step count when one is known, else the rating label. */
 export const stepSummary = (id: string, indexSteps: string) => {
@@ -64,13 +64,15 @@ export const stepSummary = (id: string, indexSteps: string) => {
 };
 
 export const stepNote = (source: StepSource) =>
-  source === 'index' ? 'Counted in the source index.'
-  : source === 'osm-survey' ? 'Counted by OpenStreetMap surveyors.'
-  : `Estimated from the measured rise, typically within ${measurementSource.estimateErrorPercent}%.`;
+  source === "index"
+    ? "Counted in the source index."
+    : source === "osm-survey"
+      ? "Counted by OpenStreetMap surveyors."
+      : `Estimated from the measured rise, typically within ${measurementSource.estimateErrorPercent}%.`;
 
 export const riseLabel = (measurement: Measurement) =>
-  measurement.riseFeet >= 1 ? `${measurement.riseFeet} ft climb` : 'Level';
+  measurement.riseFeet >= 1 ? `${measurement.riseFeet} ft climb` : "Level";
 
 export const riseNote = (measurement: Measurement) =>
-  `${measurement.bottomFeet} ft to ${measurement.topFeet} ft over ${measurement.runFeet} ft of ground, `
-  + `from ${measurement.resolutionMeters <= 1 ? '1 m lidar' : `${measurement.resolutionMeters} m terrain`} samples.`;
+  `${measurement.bottomFeet} ft to ${measurement.topFeet} ft over ${measurement.runFeet} ft of ground, ` +
+  `from ${measurement.resolutionMeters <= 1 ? "1 m lidar" : `${measurement.resolutionMeters} m terrain`} samples.`;

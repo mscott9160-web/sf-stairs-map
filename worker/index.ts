@@ -9,5 +9,5 @@ interface Env {
 export default {
   fetch(request, env): Promise<Response> | Response {
     return env.ASSETS.fetch(request);
-  }
+  },
 } satisfies ExportedHandler<Env>;

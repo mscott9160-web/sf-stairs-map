@@ -7,10 +7,21 @@
     "dev": "vite --host 0.0.0.0",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview --host 0.0.0.0",
+    "format": "prettier --write \"**/*.{ts,tsx}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx}\"",
     "test": "playwright test",
     "deploy": "npm run build && wrangler deploy",
     "import:data": "python3 scripts/import-data.py"
   },
-  "dependencies": { "leaflet": "^1.9.4" },
-  "devDependencies": { "@playwright/test": "^1.58.2", "@types/leaflet": "^1.9.21", "typescript": "^5.9.3", "vite": "^8.0.0", "wrangler": "^4.131.2" }
+  "dependencies": {
+    "leaflet": "^1.9.4"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.58.2",
+    "@types/leaflet": "^1.9.21",
+    "prettier": "^3.9.10",
+    "typescript": "^5.9.3",
+    "vite": "^8.0.0",
+    "wrangler": "^4.131.2"
+  }
 }
